@@ -10,7 +10,7 @@ const products = [];
 
 router.get('/add-product', (req, res, next) => {
     // res.sendFile(path.join(rootDir, 'templates/static/add-product.html'));
-    res.render('add-product', { title: 'Add Product' });
+    res.render('add-product', { title: 'Add Product', path: 'addProduct' });
 });
 
 router.post('/add-product', (req, res, next) => {
