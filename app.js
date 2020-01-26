@@ -7,9 +7,9 @@ const app = express();
 
 const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
-// const publicDir = path.join(__dirname, '/views');
+const publicDir = path.join(__dirname, 'public');
 
-// app.use(express.static(publicDir));
+app.use(express.static(publicDir));
 
 
 app.use(bodyParser.urlencoded({extended: false}));
