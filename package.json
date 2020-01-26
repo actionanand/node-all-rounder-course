@@ -1,0 +1,27 @@
+{
+  "name": "all-rounder-course",
+  "version": "1.0.0",
+  "description": "It's all about node(Rest API, GraphQL, SQL, NoSQL, Fullstack, etc)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "start-dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/actionanand/node-all-rounder-course.git"
+  },
+  "author": "Anand Raja",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/actionanand/node-all-rounder-course/issues"
+  },
+  "homepage": "https://github.com/actionanand/node-all-rounder-course#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
