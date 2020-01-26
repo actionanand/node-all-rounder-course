@@ -9,7 +9,8 @@ const router = express.Router();
 const products = [];
 
 router.get('/add-product', (req, res, next) => {
-    res.sendFile(path.join(rootDir, 'templates/static/add-product.html'));
+    // res.sendFile(path.join(rootDir, 'templates/static/add-product.html'));
+    res.render('add-product', { title: 'Add Product' });
 });
 
 router.post('/add-product', (req, res, next) => {
