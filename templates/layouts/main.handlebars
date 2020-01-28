@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,19 +8,22 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{title}}</title>
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/product.css">
+    {{#if formCSS}}
+        <link rel="stylesheet" href="/css/forms.css">
+    {{/if}}
 </head>
 
 <body>
     <header class="main-header">
         <nav class="main-header__nav">
             <ul class="main-header__item-list">
-                <li class="main-header__item"><a href="/">Shop</a></li>
-                <li class="main-header__item"><a href="/admin/add-product">Add Product</a></li>
+                <li class="main-header__item"><a class="{{#if activeShop }} active {{/if}}" href="/">Shop</a></li>
+                <li class="main-header__item"><a class="{{#if activeProduct }} active {{/if}}" href="/admin/add-product">Add Product</a></li>
             </ul>
         </nav>
     </header>
-    <h1>404</h1>
-    <h3>{{url}}</h3>
+    {{{ body }}}
 </body>
 
 </html> 

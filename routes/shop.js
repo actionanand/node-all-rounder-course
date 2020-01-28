@@ -10,7 +10,7 @@ const router = express.Router();
 router.get('/', (req, res, next) => {
     // console.log(products);
     // res.sendFile(path.join(rootDir, 'templates/static/shop.html'));
-    res.render('shop', { title: 'My Shop', products, path: 'shop' });
+    res.render('shop', { title: 'My Shop', products, hasProduct: products.length > 0, activeShop: true, path: 'shop' });
 });
 
 
