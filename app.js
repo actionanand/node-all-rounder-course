@@ -8,6 +8,8 @@ const app = express();
 
 const {routes: adminRoutes} = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
+const errorCtr = require('./controllers/error');
+
 const publicDir = path.join(__dirname, 'public');
 const viewPath = path.join(__dirname, './templates/views');
 
@@ -24,12 +26,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
-app.use((req, res, next) => {
-    // res.status(404).sendFile(path.join(__dirname, 'templates/static/404.html'));
-    let url = `localhost:3001${req.url}`;
-    // res.status(404).render('404', { title: 'Page Not Found', url, layout: false })
-    res.status(404).render('404', { title: 'Page Not Found', url, path: '' })
-});
+app.use(errorCtr.get404);
 
 app.listen(3001, () => {
     console.log('Running at Port 3001');
