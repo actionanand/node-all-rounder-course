@@ -10,11 +10,14 @@ exports.postAddProd = (req, res, next) => {
     const product = new Product(req.body.title);
     product.save();
     res.redirect('/');
-}
+        // this.getProducts();
+};
 
 exports.getProducts = (req, res, next) => {
-    const products = Product.fetchAll();
+    Product.fetchAll(products => {
+        res.render('shop', { title: 'My Shop', products, path: 'shop' });
+    });
     // res.sendFile(path.join(rootDir, 'templates/static/shop.html'));
     // res.render('shop', { title: 'My Shop', products, hasProduct: products.length > 0, activeShop: true, path: 'shop' });
-    res.render('shop', { title: 'My Shop', products, path: 'shop' });
 }
+
