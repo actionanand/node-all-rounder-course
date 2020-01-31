@@ -11,7 +11,11 @@ router.get('/', prodCtr.getIndex);
 
 router.get('/products', prodCtr.getProducts);
 
+router.get('/products/:prodId', prodCtr.getProduct);
+
 router.get('/cart', prodCtr.getCart);
+
+router.get('/orders', prodCtr.getOrders);
 
 router.get('/checkout', prodCtr.getCheckout);
 
