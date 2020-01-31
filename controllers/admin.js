@@ -12,3 +12,9 @@ exports.postAddProd = (req, res, next) => {
     res.redirect('/');
         // this.getProducts();
 };
+
+exports.getProducts = (req, res, next) => {
+    Product.fetchAll((products) => {
+        res.render('admin/products', { title: 'Admin Products', products, path: 'adminProduct' });
+    });
+}

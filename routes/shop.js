@@ -7,12 +7,12 @@ const prodCtr = require('../controllers/shop');
 
 const router = express.Router();
 
-router.get('/', prodCtr.getProducts);
+router.get('/', prodCtr.getIndex);
 
-router.get('/products');
+router.get('/products', prodCtr.getProducts);
 
-router.get('/cart');
+router.get('/cart', prodCtr.getCart);
 
-router.get('/checkout');
+router.get('/checkout', prodCtr.getCheckout);
 
 module.exports = router;

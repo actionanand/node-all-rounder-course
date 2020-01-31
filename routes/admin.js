@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get('/add-product', adminCtr.getAddProd);
 
-router.get('/products')
+router.get('/products', adminCtr.getProducts);
 
 router.post('/add-product', adminCtr.postAddProd);
 
