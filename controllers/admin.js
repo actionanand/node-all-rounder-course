@@ -3,7 +3,21 @@ const Product = require('../models/product');
 exports.getAddProd = (req, res, next) => {
     // res.sendFile(path.join(rootDir, 'templates/static/add-product.html'));
     // res.render('add-product', { title: 'Add Product', formCSS: true, activeProduct: true, path: 'addProduct' });
-    res.render('admin/add-product', { title: 'Add Product', path: 'addProduct' });
+    res.render('admin/edit-product', { title: 'Add Product', path: 'addProduct', editing: false });
+}
+
+exports.getEditProd = (req, res, next) => {
+    const editMode = req.query.edit;
+    if(!editMode) {
+        return res.redirect('/');
+    }
+    const prodId = req.params.prodId;
+    Product.fetchById(prodId, product => {
+        if(!product) {
+            return res.redirect('/');
+        }
+        res.render('admin/edit-product', { title: 'Edit Product', product, path: '', editing: editMode });
+    });
 }
 
 exports.postAddProd = (req, res, next) => {

@@ -16,5 +16,7 @@ router.get('/products', adminCtr.getProducts);
 
 router.post('/add-product', adminCtr.postAddProd);
 
+router.get('/edit-product/:prodId', adminCtr.getEditProd);
+
 exports.routes = router;
 
