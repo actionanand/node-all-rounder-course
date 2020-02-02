@@ -2,6 +2,8 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const chalk = require('chalk');
+
 const sequelize = require('./utils/database');
 // const exphbs = require('express-handlebars');
 
@@ -31,15 +33,16 @@ app.use(shopRoutes);
 app.use(errorCtr.get404);
 
 app.listen(port, () => {
-    console.log(`Running at Port ${port}`);
+    console.log(chalk `{cyan Server is up at Port} {green.bold.underline ${port}}`);
 });
 
 sequelize.authenticate().then(() => {
-    console.log('Database is connected!');
+    console.log(chalk `{green Database is {bold connected!}}`);
     return sequelize.sync();
 }).then(() => {
-    console.log('DB & relationship are in sync');
+    console.log(chalk `{green.bold DB & relationship} {cyan are in {underline sync}}`);
 }).catch(err => {
+    console.log(chalk.bold.red('Error in either connecting to DB or sync!'));
     console.log(err);
 });
  
