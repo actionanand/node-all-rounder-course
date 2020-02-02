@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT
 
+const db = require('./utils/database');
 const {routes: adminRoutes} = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const errorCtr = require('./controllers/error');
@@ -21,6 +22,12 @@ const viewPath = path.join(__dirname, './templates/views');
 app.set('view engine', 'ejs');
 // app.set('view engine', 'pug');
 app.set('views', viewPath);
+
+db.execute('SELECT * FROM products').then((result) => {
+    console.log(result[0]);
+}).catch((err) => {
+    console.log(err);
+});
 
 app.use(express.static(publicDir));
 app.use(bodyParser.urlencoded({extended: false}));
