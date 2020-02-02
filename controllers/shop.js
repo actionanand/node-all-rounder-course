@@ -13,8 +13,10 @@ exports.getProducts = (req, res, next) => {
 
 exports.getProduct = (req, res, next) => {
     const prodId = req.params.prodId;
-    Product.fetchById(prodId, product => {
-        res.render('shop/product-detail', { title: 'Product Details' , product, path: 'products' });
+    Product.fetchById(prodId).then(([product, fieldData]) => {
+        res.render('shop/product-detail', { title: 'Product Details' , product: product[0], path: 'products' });
+    }).catch(err => {
+        console.log(err);
     });
 }
 
