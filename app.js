@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 // const exphbs = require('express-handlebars');
 
 const app = express();
+const port = process.env.PORT
 
 const {routes: adminRoutes} = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
@@ -28,6 +29,6 @@ app.use(shopRoutes);
 
 app.use(errorCtr.get404);
 
-app.listen(3001, () => {
-    console.log('Running at Port 3001');
+app.listen(port, () => {
+    console.log(`Running at Port ${port}`);
 });
