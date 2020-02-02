@@ -2,6 +2,7 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const sequelize = require('./utils/database');
 // const exphbs = require('express-handlebars');
 
 const app = express();
@@ -32,3 +33,13 @@ app.use(errorCtr.get404);
 app.listen(port, () => {
     console.log(`Running at Port ${port}`);
 });
+
+sequelize.authenticate().then(() => {
+    console.log('Database is connected!');
+    return sequelize.sync();
+}).then(() => {
+    console.log('DB & relationship are in sync');
+}).catch(err => {
+    console.log(err);
+});
+ 
