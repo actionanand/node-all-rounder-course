@@ -44,7 +44,7 @@ User.hasMany(Product);
 
 sequelize.authenticate().then(() => {
     console.log(chalk `{green Database is {bold connected!}}`);
-    return sequelize.sync();
+    return sequelize.sync({ force: true });
 }).then(() => {
     console.log(chalk `{green.bold DB & relationship} {cyan are in {underline sync}}`);
 }).catch(err => {
