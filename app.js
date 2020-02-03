@@ -17,6 +17,9 @@ const errorCtr = require('./controllers/error');
 const publicDir = path.join(__dirname, 'public');
 const viewPath = path.join(__dirname, './templates/views');
 
+const Product = require('./models/product');
+const User = require('./models/user');
+
 // const layoutPath = path.join(__dirname, './templates/layouts');
 // const partialsPath = path.join(__dirname, '../templates/partials');
 
@@ -35,6 +38,9 @@ app.use(errorCtr.get404);
 app.listen(port, () => {
     console.log(chalk `{cyan Server is up at Port} {green.bold.underline ${port}}`);
 });
+
+Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE'});
+User.hasMany(Product);
 
 sequelize.authenticate().then(() => {
     console.log(chalk `{green Database is {bold connected!}}`);
