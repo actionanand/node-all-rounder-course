@@ -30,6 +30,16 @@ app.set('views', viewPath);
 
 app.use(express.static(publicDir));
 app.use(bodyParser.urlencoded({extended: false}));
+
+app.use((req, res, next) => {
+    User.findByPk(1).then(user => {
+        req.user = user;
+        next();
+    })
+    .catch(err => {
+        console.log(err);
+    });
+});
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
@@ -44,10 +54,20 @@ User.hasMany(Product);
 
 sequelize.authenticate().then(() => {
     console.log(chalk `{green Database is {bold connected!}}`);
-    return sequelize.sync({ force: true });
+    // return sequelize.sync({ force: true });
+    return sequelize.sync();
 }).then(() => {
     console.log(chalk `{green.bold DB & relationship} {cyan are in {underline sync}}`);
-}).catch(err => {
+    return User.findByPk(1);
+}).then(user => {
+    if(!user) {
+        return User.create({name: 'Anand Raja', email: 'anand@test@io'});
+    }
+    return user;
+}).then(user => {
+    // console.log(user);
+})
+.catch(err => {
     console.log(chalk.bold.red('Error in either connecting to DB or sync!'));
     console.log(err);
 });
