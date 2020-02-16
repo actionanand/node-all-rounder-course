@@ -53,7 +53,8 @@ exports.postEditProd = (req, res, next) => {
     const updatedPrice = req.body.price;
 
     req.user.getProducts({where: {id: prodId}})
-    .then(product => {
+    .then(products => {
+        const product = products[0];
         product.title = updatedTitle;
         product.description = updatedDesc;
         product.imageUrl = updatedImgUrl;
