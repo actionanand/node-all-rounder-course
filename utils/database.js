@@ -3,25 +3,38 @@ const chalk = require('chalk');
 
 const MongoClient = mongodb.MongoClient;
 
+let _db;
+
 const mongoUser = process.env.mongoUser;
 const mongoPass = process.env.mongoPass;
 const mongoCuster = process.env.mongoCuster;
-const mongoCollection = process.env.mongoCollection;
-const dbUrl = `mongodb+srv://${mongoUser}:${mongoPass}@${mongoCuster}.mongodb.net/${mongoCollection}?retryWrites=true&w=majority`;
+const mongoDbName = process.env.mongoDbName;
+const dbUrl = `mongodb+srv://${mongoUser}:${mongoPass}@${mongoCuster}.mongodb.net/${mongoDbName}?retryWrites=true&w=majority`;
 
 const mongoConnect = callBack => {
     MongoClient.connect(dbUrl, 
-        { useNewUrlParser: true , useUnifiedTopology: true, useCreateIndex: true })
+        { useNewUrlParser: true , useUnifiedTopology: true })
         .then(client => {
         console.log(chalk `{green MongoDB is {bold connected!}}`);
-        callBack(client);
+        _db = client.db();
+        callBack();
     }).catch(err => {
         console.log(chalk.bold.red('Error in connecting to DB!'));
         console.log(err);
     });
 }
 
-module.exports = mongoConnect;
+const getDB = () => {
+    if(_db) {
+        return _db;
+    }
+    throw 'No DB is found!';
+}
+
+module.exports = {
+    mongoConnect,
+    getDB
+};
 
 
 //using sql

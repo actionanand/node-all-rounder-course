@@ -4,7 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const chalk = require('chalk');
 
-const mongoConnect = require('./utils/database');
+const { mongoConnect } = require('./utils/database');
 
 // const exphbs = require('express-handlebars');
 
@@ -47,8 +47,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 // app.use(errorCtr.get404);
 
-mongoConnect(client => {
-    // console.log(client);
+mongoConnect(() => {
     console.log('Mongo functioning!');
 });
 
