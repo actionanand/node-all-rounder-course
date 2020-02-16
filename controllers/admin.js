@@ -29,16 +29,19 @@ exports.postAddProd = (req, res, next) => {
     const desc = req.body.description;
     const price = req.body.price;
     const imageUrl = req.body.imageUrl;
-    Product.create({
+
+    req.user.createProduct({
         title,
         price,
         imageUrl,
         description: desc
-    }).then(() => {
+    })
+    .then(() => {
         console.log(chalk.cyan('Product created!'));
         res.redirect('/admin/products');
     }).catch(err => {
         console.log(chalk.cyan('Unable to create the product!'));
+        console.log(err);
     });
 };
 
