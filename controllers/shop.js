@@ -29,17 +29,13 @@ exports.getIndex = (req, res, next) => {
 }
 
 exports.getCart = (req, res, next) => {
-    Cart.getCart(cart => {
-        Product.fetchAll(products => {
-            const cartProd = [];
-            for(product of products) {
-                const foundProdInCart = cart.products.find(p => product.id === p.id);
-                if(foundProdInCart) {
-                    cartProd.push({product, qty: foundProdInCart.qty});
-                }
-            }
-            res.render('shop/cart', { title: 'Your Cart', path: 'cart', cartProd });
-        });
+    req.user.getCart().then(cart => {
+        return cart.getProducts();
+    }).then(cartProd => {
+        res.render('shop/cart', { title: 'Your Cart', path: 'cart', cartProd });
+    })
+    .catch(err => {
+        console.log(err);
     });
 }
 

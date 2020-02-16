@@ -51,7 +51,9 @@ exports.postEditProd = (req, res, next) => {
     const updatedDesc = req.body.description;
     const updatedImgUrl = req.body.imageUrl;
     const updatedPrice = req.body.price;
-    Product.findByPk(prodId).then(product => {
+
+    req.user.getProducts({where: {id: prodId}})
+    .then(product => {
         product.title = updatedTitle;
         product.description = updatedDesc;
         product.imageUrl = updatedImgUrl;
@@ -67,7 +69,8 @@ exports.postEditProd = (req, res, next) => {
 }
 
 exports.getProducts = (req, res, next) => {
-    Product.findAll().then((products) => {
+    req.user.getProducts()
+    .then((products) => {
         res.render('admin/products', { title: 'Admin Products', products, path: 'adminProduct' });
     }).catch((err) => {
         console.log(err)

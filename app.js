@@ -19,6 +19,8 @@ const viewPath = path.join(__dirname, './templates/views');
 
 const Product = require('./models/product');
 const User = require('./models/user');
+const Cart = require('./models/cart');
+const CartItem = require('./models/cart-item');
 
 // const layoutPath = path.join(__dirname, './templates/layouts');
 // const partialsPath = path.join(__dirname, '../templates/partials');
@@ -51,6 +53,10 @@ app.listen(port, () => {
 
 Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE'});
 User.hasMany(Product);
+User.hasOne(Cart);
+Cart.belongsTo(User);
+Cart.belongsToMany(Product, {through: CartItem});
+Product.belongsToMany(Cart, {through: CartItem});
 
 sequelize.authenticate().then(() => {
     console.log(chalk `{green Database is {bold connected!}}`);
@@ -66,6 +72,9 @@ sequelize.authenticate().then(() => {
     return user;
 }).then(user => {
     // console.log(user);
+    return user.createCart();
+}).then(cart => {
+    // console.log(cart);
 })
 .catch(err => {
     console.log(chalk.bold.red('Error in either connecting to DB or sync!'));
