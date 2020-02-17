@@ -31,36 +31,19 @@ exports.postCart = (req, res, next) => {
     Product.findById(prodId).then(product => {
         return req.user.addToCart(product);
     }).then(result => {
-        console.log(result);
+        // console.log(result);
+        res.redirect('/cart');
     }).catch(err => console.log(err));
-    
-    // let fetchedCart;
-    // let newQuantity = 1;
-    // req.user.getCart().then(cart => {
-    //     fetchedCart = cart;
-    //     return cart.getProducts({where: {id: prodId}});
-    // }).then(products => {
-    //     let product;
-    //     if(products.length > 0){
-    //         product = products[0];
-    //     }
-        
-    //     if(product) {
-    //         const oldQntity = product.CartItem.quantity;
-    //         newQuantity = oldQntity + 1;
-    //         return product;
-    //     }
-    //     return Product.findByPk(prodId);
-    // })
-    // .then(product => {
-    //     return fetchedCart.addProduct(product, {through: {quantity: newQuantity}});
-    // })
-    // .then(() => {
-    //     res.redirect('/cart');
-    // })
-    // .catch(err => console.log(err));
 }
 
+exports.getCart = (req, res, next) => {
+    req.user.getCart().then(cartProd => {
+        res.render('shop/cart', { title: 'Your Cart', path: 'cart', cartProd });
+    })
+    .catch(err => {
+        console.log(err);
+    });
+}
 
 //using SQL
 

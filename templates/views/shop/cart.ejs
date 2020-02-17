@@ -10,10 +10,10 @@
                     <% cartProd.forEach(cartSingleProd => { %>
                         <li class="cart__item">
                             <p>
-                                <%= cartSingleProd.title %> (<%= cartSingleProd.CartItem.quantity %>)
+                                <%= cartSingleProd.title %> (<%= cartSingleProd.quantity %>)
                             </p>
                             <form action="/cart-delete-item" method="POST">
-                                <input type="hidden" value="<%= cartSingleProd.id %>" name="productId">
+                                <input type="hidden" value="<%= cartSingleProd._id %>" name="productId">
                                 <button class="btn danger" type="submit">Delete</button>
                             </form>
                         </li>
