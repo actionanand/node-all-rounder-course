@@ -11,7 +11,7 @@ router.get('/', prodCtr.getIndex);
 
 router.get('/products', prodCtr.getProducts);
 
-// router.get('/products/:prodId', prodCtr.getProduct);
+router.get('/products/:prodId', prodCtr.getProduct);
 
 // router.get('/cart', prodCtr.getCart);
 

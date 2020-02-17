@@ -17,6 +17,15 @@ exports.getProducts = (req, res, next) => {
     });
 }
 
+exports.getProduct = (req, res, next) => {
+    const prodId = req.params.prodId;
+    Product.findById(prodId).then(product => {
+        res.render('shop/product-detail', { title: 'Product Details' , product, path: 'products' });
+    }).catch(err => {
+        console.log(err);
+    });
+}
+
 //using SQL
 
 // exports.getProducts = (req, res, next) => {
