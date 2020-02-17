@@ -16,6 +16,11 @@ class User {
     }
 
     addToCart(product) {
+
+        // const updatedCart = {items: [{prodId: mongoDB.ObjectID(product._id), quantity: 1}]};
+        // const db = getDB();
+        // return db.collection('users').updateOne({ _id: mongoDB.ObjectID(this._id)}, {$set: {cart: updatedCart}})
+
         const cartProdInd = this.cart.items.findIndex(cp => {
             return cp.prodId.toString() === product._id.toString();
         });
@@ -51,6 +56,18 @@ class User {
                     };
             });
         });
+    }
+
+    deleteFromCart(prodId) {
+        const updatedCartItems = this.cart.items.filter(i => {
+            return i.prodId.toString() !== prodId.toString();
+        });
+
+        const updatedCart = { items: updatedCartItems };
+        const db = getDB();
+        return db.collection('users').updateOne({ _id: mongoDB.ObjectID(this._id)},
+        { $set: { cart: updatedCart } });
+
     }
 
     static findById(userId) {

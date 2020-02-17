@@ -45,6 +45,16 @@ exports.getCart = (req, res, next) => {
     });
 }
 
+exports.postDeleteCartItem = (req, res, next) => {
+    const prodId = req.body.productId;
+    req.user.deleteFromCart(prodId)
+    .then(result => {
+        // console.log(result);
+        res.redirect('/cart');
+    })
+    .catch(err => console.log(err));
+}
+
 //using SQL
 
 // exports.getProducts = (req, res, next) => {
