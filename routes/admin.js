@@ -20,7 +20,7 @@ router.get('/edit-product/:prodId', adminCtr.getEditProd);
 
 router.post('/edit-product', adminCtr.postEditProd);
 
-// router.post('/delete-product', adminCtr.postDeleteProduct);
+router.post('/delete-product', adminCtr.postDeleteProduct);
 
 exports.routes = router;
 
