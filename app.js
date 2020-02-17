@@ -11,9 +11,9 @@ const { mongoConnect } = require('./utils/database');
 const app = express();
 const port = process.env.PORT
 
-// const {routes: adminRoutes} = require('./routes/admin');
-// const shopRoutes = require('./routes/shop');
-// const errorCtr = require('./controllers/error');
+const {routes: adminRoutes} = require('./routes/admin');
+const shopRoutes = require('./routes/shop');
+const errorCtr = require('./controllers/error');
 
 const publicDir = path.join(__dirname, 'public');
 const viewPath = path.join(__dirname, './templates/views');
@@ -42,10 +42,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 //     });
 // });
 
-// app.use('/admin', adminRoutes);
-// app.use(shopRoutes);
+app.use('/admin', adminRoutes);
+app.use(shopRoutes);
 
-// app.use(errorCtr.get404);
+app.use(errorCtr.get404);
 
 mongoConnect(() => {
     console.log('Mongo functioning!');
