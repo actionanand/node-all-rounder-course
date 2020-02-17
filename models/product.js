@@ -3,12 +3,13 @@ const mongoDB = require('mongodb');
 const { getDB } = require('../utils/database');
 
 class Product {
-    constructor(title, price, description, imageUrl, id){
+    constructor(title, price, description, imageUrl, id, userId){
         this.title = title;
         this.description = description;
         this.price = price;
         this.imageUrl = imageUrl;
         this._id = id;
+        this.userId = userId;
     }
 
     save() {
@@ -17,7 +18,7 @@ class Product {
         if(this._id) {
             console.log('called update');
             dbOp = db.collection('products').updateOne({ _id: mongoDB.ObjectID(this._id)}, 
-            { $set: {title: this.title, description: this.description, price: this.price, imageUrl: this.imageUrl} }); 
+            { $set: {title: this.title, description: this.description, price: this.price, imageUrl: this.imageUrl, userId: this.userId} }); 
         } else {
             console.log('called save');
             dbOp = db.collection('products').insertOne(this);

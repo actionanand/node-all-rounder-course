@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const chalk = require('chalk');
 
 const { mongoConnect } = require('./utils/database');
+const User = require('./models/user');
 
 // const exphbs = require('express-handlebars');
 
@@ -30,17 +31,16 @@ app.set('views', viewPath);
 app.use(express.static(publicDir));
 app.use(bodyParser.urlencoded({extended: false}));
 
-// to fetch the user while loading insql as midleware
 
-// app.use((req, res, next) => {
-//     User.findByPk(1).then(user => {
-//         req.user = user;
-//         next();
-//     })
-//     .catch(err => {
-//         console.log(err);
-//     });
-// });
+app.use((req, res, next) => {
+    User.findById('5e4aa93d273772e8c17f5306').then(user => {
+        req.user = user;
+        next();
+    })
+    .catch(err => {
+        console.log(err);
+    });
+});
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);

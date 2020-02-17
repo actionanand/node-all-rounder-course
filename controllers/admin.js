@@ -13,7 +13,7 @@ exports.postAddProd = (req, res, next) => {
     const price = req.body.price;
     const imageUrl = req.body.imageUrl;
 
-    const product = new Product(title, price, desc, imageUrl, null);
+    const product = new Product(title, price, desc, imageUrl, null, req.user._id);
     product.save()
     .then(() => {
         console.log(chalk.cyan('Product created!'));
@@ -57,7 +57,7 @@ exports.postEditProd = (req, res, next) => {
     const updatedImgUrl = req.body.imageUrl;
     const updatedPrice = req.body.price;
 
-    const product = new Product(updatedTitle, updatedPrice, updatedDesc, updatedImgUrl, prodId);
+    const product = new Product(updatedTitle, updatedPrice, updatedDesc, updatedImgUrl, prodId, req.user._id);
     
     product.save()
     .then(() => {
