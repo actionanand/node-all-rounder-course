@@ -3,16 +3,26 @@ const mongoDB = require('mongodb');
 const { getDB } = require('../utils/database');
 
 class Product {
-    constructor(title, price, description, imageUrl){
+    constructor(title, price, description, imageUrl, id){
         this.title = title;
         this.description = description;
         this.price = price;
         this.imageUrl = imageUrl;
+        this._id = id;
     }
 
     save() {
         const db = getDB();
-        return db.collection('products').insertOne(this).then(result => {
+        let dbOp;
+        if(this._id) {
+            console.log('called update');
+            dbOp = db.collection('products').updateOne({ _id: mongoDB.ObjectID(this._id)}, 
+            { $set: {title: this.title, description: this.description, price: this.price, imageUrl: this.imageUrl} }); 
+        } else {
+            console.log('called save');
+            dbOp = db.collection('products').insertOne(this);
+        }
+        return dbOp.then(result => {
             console.log(result);
         })
         .catch(err => console.log(err));

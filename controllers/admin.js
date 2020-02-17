@@ -13,7 +13,7 @@ exports.postAddProd = (req, res, next) => {
     const price = req.body.price;
     const imageUrl = req.body.imageUrl;
 
-    const product = new Product(title, price, desc, imageUrl);
+    const product = new Product(title, price, desc, imageUrl, prodId);
     product.save()
     .then(() => {
         console.log(chalk.cyan('Product created!'));
@@ -30,6 +30,42 @@ exports.getProducts = (req, res, next) => {
         res.render('admin/products', { title: 'Admin Products', products, path: 'adminProduct' });
     }).catch((err) => {
         console.log(err)
+    });
+}
+
+exports.getEditProd = (req, res, next) => {
+    const editMode = req.query.edit;
+    if(!editMode) {
+        return res.redirect('/');
+    }
+    const prodId = req.params.prodId;
+    Product.findById(prodId).then(product => {
+        if(!product) {
+            return res.redirect('/');
+        }
+        res.render('admin/edit-product', { title: 'Edit Product', product, path: '', editing: editMode });
+    
+    }).catch(err => {
+        console.log(err);
+    });
+}
+
+exports.postEditProd = (req, res, next) => {
+    const prodId = req.body.productId;
+    const updatedTitle = req.body.title;
+    const updatedDesc = req.body.description;
+    const updatedImgUrl = req.body.imageUrl;
+    const updatedPrice = req.body.price;
+
+    const product = new Product(updatedTitle, updatedPrice, updatedDesc, updatedImgUrl, prodId);
+    
+    product.save()
+    .then(() => {
+        console.log(chalk.cyan('Product is updated!'));
+        res.redirect('/admin/products');
+    })
+    .catch(err => {
+        console.log(err);
     });
 }
 
