@@ -25,6 +25,27 @@ exports.getProduct = (req, res, next) => {
     });
 }
 
+exports.postCart = (req, res, next) => {
+    const prodId = req.body.prodId;
+    Product.findById(prodId).then(product => {
+        return req.user.addToCart(product);
+    }).then(result => {
+        // console.log(result);
+        res.redirect('/cart');
+    }).catch(err => console.log(err));
+}
+
+exports.getCart = (req, res, next) => {
+    req.user.populate('cart.items.prodId')
+    .execPopulate() //to change as promise
+    .then(user => {
+        const cartProd = user.cart.items;
+        res.render('shop/cart', { title: 'Your Cart', path: 'cart', cartProd });
+    })
+    .catch(err => {
+        console.log(err);
+    });
+}
 
 
 //using mongoDB

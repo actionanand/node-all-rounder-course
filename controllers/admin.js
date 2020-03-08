@@ -13,7 +13,7 @@ exports.postAddProd = (req, res, next) => {
     const price = req.body.price;
     const imageUrl = req.body.imageUrl;
 
-    const product = new Product({title, price, description: desc, imageUrl});
+    const product = new Product({ title, price, description: desc, imageUrl, userId: req.user });
     product.save()
     .then(() => {
         console.log(chalk.cyan('Product created!'));
