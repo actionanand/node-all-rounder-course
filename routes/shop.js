@@ -7,11 +7,11 @@ const prodCtr = require('../controllers/shop');
 
 const router = express.Router();
 
-// router.get('/', prodCtr.getIndex);
+router.get('/', prodCtr.getIndex);
 
-// router.get('/products', prodCtr.getProducts);
+router.get('/products', prodCtr.getProducts);
 
-// router.get('/products/:prodId', prodCtr.getProduct);
+router.get('/products/:prodId', prodCtr.getProduct);
 
 // router.get('/cart', prodCtr.getCart);
 

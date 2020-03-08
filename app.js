@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const chalk = require('chalk');
 
 // const { mongoConnect } = require('./utils/database');
-const User = require('./models/user');
+// const User = require('./models/user');
 
 // const exphbs = require('express-handlebars');
 
@@ -39,15 +39,15 @@ app.use(express.static(publicDir));
 app.use(bodyParser.urlencoded({extended: false}));
 
 
-app.use((req, res, next) => {
-    User.findById('5e4add9f273772e8c1886c53').then(user => {
-        req.user = new User(user.name, user.email, user.cart, user._id);
-        next();
-    })
-    .catch(err => {
-        console.log(err);
-    });
-});
+// app.use((req, res, next) => {
+//     User.findById('5e4add9f273772e8c1886c53').then(user => {
+//         req.user = new User(user.name, user.email, user.cart, user._id);
+//         next();
+//     })
+//     .catch(err => {
+//         console.log(err);
+//     });
+// });
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);

@@ -13,7 +13,7 @@ exports.postAddProd = (req, res, next) => {
     const price = req.body.price;
     const imageUrl = req.body.imageUrl;
 
-    const product = new Product(title, price, desc, imageUrl, null, req.user._id);
+    const product = new Product({title, price, description: desc, imageUrl});
     product.save()
     .then(() => {
         console.log(chalk.cyan('Product created!'));
@@ -25,7 +25,7 @@ exports.postAddProd = (req, res, next) => {
 };
 
 exports.getProducts = (req, res, next) => {
-    Product.fetchAll()
+    Product.find()
     .then((products) => {
         res.render('admin/products', { title: 'Admin Products', products, path: 'adminProduct' });
     }).catch((err) => {
@@ -56,11 +56,14 @@ exports.postEditProd = (req, res, next) => {
     const updatedDesc = req.body.description;
     const updatedImgUrl = req.body.imageUrl;
     const updatedPrice = req.body.price;
-
-    const product = new Product(updatedTitle, updatedPrice, updatedDesc, updatedImgUrl, prodId, req.user._id);
     
-    product.save()
-    .then(() => {
+    Product.findById(prodId).then(product => {
+        product.title = updatedTitle;
+        product.description = updatedDesc;
+        product.imageUrl = updatedImgUrl;
+        product.price = updatedPrice;
+        return product.save();
+    }).then(() => {
         console.log(chalk.cyan('Product is updated!'));
         res.redirect('/admin/products');
     })
@@ -69,16 +72,80 @@ exports.postEditProd = (req, res, next) => {
     });
 }
 
-exports.postDeleteProduct = (req, res, next) => {
-    const prodId = req.body.productId;
-    Product.deleteById(prodId).then(() => {
-        console.log(chalk.cyan('Product has been deleted'));
-        res.redirect('/admin/products');
-    }).catch(err => {
-        console.log(err);
-    });
-}
 
+//using mongoDB
+
+// exports.postAddProd = (req, res, next) => {
+//     const title = req.body.title;
+//     const desc = req.body.description;
+//     const price = req.body.price;
+//     const imageUrl = req.body.imageUrl;
+
+//     const product = new Product(title, price, desc, imageUrl, null, req.user._id);
+//     product.save()
+//     .then(() => {
+//         console.log(chalk.cyan('Product created!'));
+//         res.redirect('/admin/products');
+//     }).catch(err => {
+//         console.log(chalk.cyan('Unable to create the product!'));
+//         console.log(err);
+//     });
+// };
+
+// exports.getProducts = (req, res, next) => {
+//     Product.fetchAll()
+//     .then((products) => {
+//         res.render('admin/products', { title: 'Admin Products', products, path: 'adminProduct' });
+//     }).catch((err) => {
+//         console.log(err)
+//     });
+// }
+
+// exports.getEditProd = (req, res, next) => {
+//     const editMode = req.query.edit;
+//     if(!editMode) {
+//         return res.redirect('/');
+//     }
+//     const prodId = req.params.prodId;
+//     Product.findById(prodId).then(product => {
+//         if(!product) {
+//             return res.redirect('/');
+//         }
+//         res.render('admin/edit-product', { title: 'Edit Product', product, path: '', editing: editMode });
+    
+//     }).catch(err => {
+//         console.log(err);
+//     });
+// }
+
+// exports.postEditProd = (req, res, next) => {
+//     const prodId = req.body.productId;
+//     const updatedTitle = req.body.title;
+//     const updatedDesc = req.body.description;
+//     const updatedImgUrl = req.body.imageUrl;
+//     const updatedPrice = req.body.price;
+
+//     const product = new Product(updatedTitle, updatedPrice, updatedDesc, updatedImgUrl, prodId, req.user._id);
+    
+//     product.save()
+//     .then(() => {
+//         console.log(chalk.cyan('Product is updated!'));
+//         res.redirect('/admin/products');
+//     })
+//     .catch(err => {
+//         console.log(err);
+//     });
+// }
+
+// exports.postDeleteProduct = (req, res, next) => {
+//     const prodId = req.body.productId;
+//     Product.deleteById(prodId).then(() => {
+//         console.log(chalk.cyan('Product has been deleted'));
+//         res.redirect('/admin/products');
+//     }).catch(err => {
+//         console.log(err);
+//     });
+// }
 
 
 

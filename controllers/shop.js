@@ -1,8 +1,7 @@
 const Product = require('../models/product');
 
-
 exports.getIndex = (req, res, next) => {
-    Product.fetchAll().then((products) => {
+    Product.find().then((products) => {
         res.render('shop/index', { title: 'Shop', products, path: 'shop' });
     }).catch(err => {
         console.log(err);
@@ -10,7 +9,7 @@ exports.getIndex = (req, res, next) => {
 }
 
 exports.getProducts = (req, res, next) => {
-    Product.fetchAll().then((products) => {
+    Product.find().then((products) => {
         res.render('shop/product-list', { title: 'All Products', products, path: 'products' });
     }).catch(err => {
         console.log(err);
@@ -26,49 +25,80 @@ exports.getProduct = (req, res, next) => {
     });
 }
 
-exports.postCart = (req, res, next) => {
-    const prodId = req.body.prodId;
-    Product.findById(prodId).then(product => {
-        return req.user.addToCart(product);
-    }).then(result => {
-        // console.log(result);
-        res.redirect('/cart');
-    }).catch(err => console.log(err));
-}
-
-exports.getCart = (req, res, next) => {
-    req.user.getCart().then(cartProd => {
-        res.render('shop/cart', { title: 'Your Cart', path: 'cart', cartProd });
-    })
-    .catch(err => {
-        console.log(err);
-    });
-}
-
-exports.postDeleteCartItem = (req, res, next) => {
-    const prodId = req.body.productId;
-    req.user.deleteFromCart(prodId)
-    .then(result => {
-        // console.log(result);
-        res.redirect('/cart');
-    })
-    .catch(err => console.log(err));
-}
 
 
-exports.postOrder = (req, res, next) => {
-    let fetchedCart;
-    req.user.addOrder().then(result => {
-        res.redirect('/orders');
-    }).catch(err => console.log(err));
-}
+//using mongoDB
 
-exports.getOrders = (req, res, next) => {
-    req.user.getOrders()
-    .then(orders => {
-        res.render('shop/orders', { title: 'Your Orders', path: 'orders', orders});
-    }).catch(err => console.log(err));
-}
+// exports.getIndex = (req, res, next) => {
+//     Product.fetchAll().then((products) => {
+//         res.render('shop/index', { title: 'Shop', products, path: 'shop' });
+//     }).catch(err => {
+//         console.log(err);
+//     });
+// }
+
+// exports.getProducts = (req, res, next) => {
+//     Product.fetchAll().then((products) => {
+//         res.render('shop/product-list', { title: 'All Products', products, path: 'products' });
+//     }).catch(err => {
+//         console.log(err);
+//     });
+// }
+
+// exports.getProduct = (req, res, next) => {
+//     const prodId = req.params.prodId;
+//     Product.findById(prodId).then(product => {
+//         res.render('shop/product-detail', { title: 'Product Details' , product, path: 'products' });
+//     }).catch(err => {
+//         console.log(err);
+//     });
+// }
+
+// exports.postCart = (req, res, next) => {
+//     const prodId = req.body.prodId;
+//     Product.findById(prodId).then(product => {
+//         return req.user.addToCart(product);
+//     }).then(result => {
+//         // console.log(result);
+//         res.redirect('/cart');
+//     }).catch(err => console.log(err));
+// }
+
+// exports.getCart = (req, res, next) => {
+//     req.user.getCart().then(cartProd => {
+//         res.render('shop/cart', { title: 'Your Cart', path: 'cart', cartProd });
+//     })
+//     .catch(err => {
+//         console.log(err);
+//     });
+// }
+
+// exports.postDeleteCartItem = (req, res, next) => {
+//     const prodId = req.body.productId;
+//     req.user.deleteFromCart(prodId)
+//     .then(result => {
+//         // console.log(result);
+//         res.redirect('/cart');
+//     })
+//     .catch(err => console.log(err));
+// }
+
+
+// exports.postOrder = (req, res, next) => {
+//     let fetchedCart;
+//     req.user.addOrder().then(result => {
+//         res.redirect('/orders');
+//     }).catch(err => console.log(err));
+// }
+
+// exports.getOrders = (req, res, next) => {
+//     req.user.getOrders()
+//     .then(orders => {
+//         res.render('shop/orders', { title: 'Your Orders', path: 'orders', orders});
+//     }).catch(err => console.log(err));
+// }
+
+
 
 //using SQL
 
