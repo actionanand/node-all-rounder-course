@@ -72,6 +72,17 @@ exports.postEditProd = (req, res, next) => {
     });
 }
 
+exports.postDeleteProduct = (req, res, next) => {
+    const prodId = req.body.productId;
+    Product.findByIdAndDelete(prodId).then(() => {
+        console.log(chalk.cyan('Product has been deleted'));
+        res.redirect('/admin/products');
+    }).catch(err => {
+        console.log(err);
+    });
+}
+
+
 
 //using mongoDB
 
