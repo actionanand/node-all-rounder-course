@@ -55,6 +55,14 @@ exports.postDeleteCartItem = (req, res, next) => {
     .catch(err => console.log(err));
 }
 
+
+exports.postOrder = (req, res, next) => {
+    let fetchedCart;
+    req.user.addOrder().then(result => {
+        res.redirect('/orders');
+    }).catch(err => console.log(err));
+}
+
 //using SQL
 
 // exports.getProducts = (req, res, next) => {
