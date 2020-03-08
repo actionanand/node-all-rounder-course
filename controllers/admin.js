@@ -79,6 +79,9 @@ exports.postDeleteProduct = (req, res, next) => {
     });
 }
 
+
+
+
 // using sql
 
 // exports.getEditProd = (req, res, next) => {

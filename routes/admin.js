@@ -10,17 +10,17 @@ const adminCtr = require('../controllers/admin');
 const router = express.Router();
 
 
-router.get('/add-product', adminCtr.getAddProd);
+// router.get('/add-product', adminCtr.getAddProd);
 
-router.get('/products', adminCtr.getProducts);
+// router.get('/products', adminCtr.getProducts);
 
-router.post('/add-product', adminCtr.postAddProd);
+// router.post('/add-product', adminCtr.postAddProd);
 
-router.get('/edit-product/:prodId', adminCtr.getEditProd);
+// router.get('/edit-product/:prodId', adminCtr.getEditProd);
 
-router.post('/edit-product', adminCtr.postEditProd);
+// router.post('/edit-product', adminCtr.postEditProd);
 
-router.post('/delete-product', adminCtr.postDeleteProduct);
+// router.post('/delete-product', adminCtr.postDeleteProduct);
 
 exports.routes = router;
 

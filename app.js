@@ -1,10 +1,11 @@
 const path = require('path');
 
 const express = require('express');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const chalk = require('chalk');
 
-const { mongoConnect } = require('./utils/database');
+// const { mongoConnect } = require('./utils/database');
 const User = require('./models/user');
 
 // const exphbs = require('express-handlebars');
@@ -19,6 +20,12 @@ const errorCtr = require('./controllers/error');
 const publicDir = path.join(__dirname, 'public');
 const viewPath = path.join(__dirname, './templates/views');
 
+
+const mongoUser = process.env.mongoUser;
+const mongoPass = process.env.mongoPass;
+const mongoCuster = process.env.mongoCuster;
+const mongoDbName = process.env.mongoDbName;
+const dbUrl = `mongodb+srv://${mongoUser}:${mongoPass}@${mongoCuster}.mongodb.net/${mongoDbName}?retryWrites=true&w=majority`;
 
 // const layoutPath = path.join(__dirname, './templates/layouts');
 // const partialsPath = path.join(__dirname, '../templates/partials');
@@ -47,8 +54,16 @@ app.use(shopRoutes);
 
 app.use(errorCtr.get404);
 
-mongoConnect(() => {
-    console.log('Mongo functioning!');
+// mongoConnect(() => {
+//     console.log('Mongo functioning!');
+// });
+
+mongoose.connect(dbUrl, { useNewUrlParser: true , useUnifiedTopology: true } )
+.then(client => {
+    console.log(chalk `{green MongoDB is {bold connected!}}`);
+}).catch(err => {
+    console.log(chalk.bold.red('Error in connecting to DB!'));
+    console.log(err);
 });
 
 app.listen(port, () => {

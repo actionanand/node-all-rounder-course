@@ -1,40 +1,44 @@
-const mongodb = require('mongodb');
-const chalk = require('chalk');
+//using mongoDB
 
-const MongoClient = mongodb.MongoClient;
+// const mongodb = require('mongodb');
+// const chalk = require('chalk');
 
-let _db;
+// const MongoClient = mongodb.MongoClient;
 
-const mongoUser = process.env.mongoUser;
-const mongoPass = process.env.mongoPass;
-const mongoCuster = process.env.mongoCuster;
-const mongoDbName = process.env.mongoDbName;
-const dbUrl = `mongodb+srv://${mongoUser}:${mongoPass}@${mongoCuster}.mongodb.net/${mongoDbName}?retryWrites=true&w=majority`;
+// let _db;
 
-const mongoConnect = callBack => {
-    MongoClient.connect(dbUrl, 
-        { useNewUrlParser: true , useUnifiedTopology: true })
-        .then(client => {
-        console.log(chalk `{green MongoDB is {bold connected!}}`);
-        _db = client.db();
-        callBack();
-    }).catch(err => {
-        console.log(chalk.bold.red('Error in connecting to DB!'));
-        console.log(err);
-    });
-}
+// const mongoUser = process.env.mongoUser;
+// const mongoPass = process.env.mongoPass;
+// const mongoCuster = process.env.mongoCuster;
+// const mongoDbName = process.env.mongoDbName;
+// const dbUrl = `mongodb+srv://${mongoUser}:${mongoPass}@${mongoCuster}.mongodb.net/${mongoDbName}?retryWrites=true&w=majority`;
 
-const getDB = () => {
-    if(_db) {
-        return _db;
-    }
-    throw 'No DB is found!';
-}
+// const mongoConnect = callBack => {
+//     MongoClient.connect(dbUrl, 
+//         { useNewUrlParser: true , useUnifiedTopology: true })
+//         .then(client => {
+//         console.log(chalk `{green MongoDB is {bold connected!}}`);
+//         _db = client.db();
+//         callBack();
+//     }).catch(err => {
+//         console.log(chalk.bold.red('Error in connecting to DB!'));
+//         console.log(err);
+//     });
+// }
 
-module.exports = {
-    mongoConnect,
-    getDB
-};
+// const getDB = () => {
+//     if(_db) {
+//         return _db;
+//     }
+//     throw 'No DB is found!';
+// }
+
+// module.exports = {
+//     mongoConnect,
+//     getDB
+// };
+
+
 
 
 //using sql
