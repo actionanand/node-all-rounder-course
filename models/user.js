@@ -89,6 +89,11 @@ class User {
         });
     }
 
+    getOrders() {
+        const db = getDB();
+        return db.collection('orders').find({'user._id': mongoDB.ObjectID(this._id)}).toArray();
+    }
+
     static findById(userId) {
         const db = getDB();
         return db.collection('users').findOne({_id: mongoDB.ObjectID(userId)}).then(user => {

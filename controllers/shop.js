@@ -63,6 +63,13 @@ exports.postOrder = (req, res, next) => {
     }).catch(err => console.log(err));
 }
 
+exports.getOrders = (req, res, next) => {
+    req.user.getOrders()
+    .then(orders => {
+        res.render('shop/orders', { title: 'Your Orders', path: 'orders', orders});
+    }).catch(err => console.log(err));
+}
+
 //using SQL
 
 // exports.getProducts = (req, res, next) => {
